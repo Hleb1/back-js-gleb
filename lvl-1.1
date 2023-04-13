@@ -1,4 +1,21 @@
-function Product (ID, name, description, price, brand, sizes, activeSize, quantity, date, reviews, images){
+function Reviews (id, author, date, comment, rating) {
+    this.id = id;
+    this.author = author;
+    this.date = date;
+    this.comment = comment;
+    this.rating = rating;
+    this.getId = function(){return this.id};
+    this.setId = function(id){this.id = id};
+    this.getAuthor = function(){return this.author};
+    this.setAuthor = function(author){this.author = author};
+    this.getDate = function(){return this.date};
+    this.setDate = function(date){this.date = date};
+    this.getComment = function(){return this.comment};
+    this.setComment = function(comment){this.comment = comment};
+    this.getRating = function(){return this.rating};
+    this.setRating = function(rating){this.rating = rating};
+};
+function Product (ID, name, description, price, brand, sizes, activeSize, quantity, date, images){
     this.ID = ID,
     this.name = name,
     this.description = description,
@@ -8,7 +25,12 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
     this.activeSize = activeSize,
     this.quantity = quantity,
     this.date = date,
-    this.reviews = reviews,
+    this.reviews = [];
+
+    this.addReview = function(id, author, date, comment, rating){
+        const review = new Reviews(id, author, date, comment, rating);
+        this.reviews.push(review);
+    };
     this.images = images,
     this.getID = function(){return this.ID};
     this.setID = function(ID){this.ID = ID};
@@ -28,36 +50,34 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
     this.setQuantity = function(quantity){this.quantity = quantity};
     this.getDate = function(){return this.date};
     this.setDate = function(date){this.date = date};
-    this.getReviews = function(){return this.reviews};
-    this.setReviews = function(reviews){this.reviews = reviews};
     this.getImages = function(){return this.images};
     this.setImages = function(images){this.images = images};
 
     this.getReviewByID = function (reviewID){
-        for(let key in this.reviews){
-            if(key === reviewID){
-                return this.reviews[key];
+        for(let i = 0; i < this.reviews.length; i++){
+            if(this.reviews[i].id == reviewID){
+                return this.reviews[i];
             }
+            
         }
-    }
+        return "Not found";
+    };
     
    
-}
-function Reviews (id, author, date, comment, rating) {
-    this.id = id;
-    this.author = author;
-    this.date = date;
-    this.comment = comment;
-    this.rating = rating;
 }
 const rating = {
     ['service'] : 4,
     ['price'] : 5,
     ['value'] : 4,
     ['quality'] : 4,
-}
-let review1 = new Reviews(91502, "Samael", Date(), "shiny thing", "4.7 Stars")
-let date = Date(2011, 12 ,5);
+};
+
+
+
+let date = new Date(2011, 12 ,5);
     let sizes =['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, review1, "-" )    
-console.log(newproduct.getReviewByID(91502));
+let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, "-" ); 
+let review1 = newproduct.addReview(91502, "Samael",date, "shiny thing", "4.7 Stars");
+let review2 = newproduct.addReview(91912, "Michael", date, "good", "4.8 Stars");
+let review3 = newproduct.addReview(89125, "Aminadiel", date, "working great!", "4.9 Stars");
+console.log(newproduct.reviews);
