@@ -4,12 +4,12 @@ function Reviews (id, author, date, comment, rating) {
     this.date = date;
     this.comment = comment;
     this.rating = rating;
-    this.getId = function(){return this.id};
-    this.setId = function(id){this.id = id};
+    this.getReviewId = function(){return this.id};
+    this.setReviewId = function(id){this.id = id};
     this.getAuthor = function(){return this.author};
     this.setAuthor = function(author){this.author = author};
-    this.getDate = function(){return this.date};
-    this.setDate = function(date){this.date = date};
+    this.getReviewDate = function(){return this.date};
+    this.setReviewDate = function(date){this.date = date};
     this.getComment = function(){return this.comment};
     this.setComment = function(comment){this.comment = comment};
     this.getRating = function(){return this.rating};
@@ -30,6 +30,7 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
     this.addReview = function(id, author, date, comment, rating){
         const review = new Reviews(id, author, date, comment, rating);
         this.reviews.push(review);
+        return review;
     };
     this.images = images,
     this.getID = function(){return this.ID};
@@ -62,22 +63,98 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
         }
         return "Not found";
     };
-    
-   
+
+     this.getImage = (param) => {
+         if (typeof(param) === 'undefined'){
+             return this.images[0];
+        }
+        else if (images.includes(param)){
+             return this.images.find(elem => elem === param);
+         }
+         else{
+           return console.log("There is no such image!");
+         }
+     }
+    this.addSize = function(size){
+        if(!this.sizes.includes(size)){ 
+            this.sizes.push(size);
+            return this.sizes;
+        }
+        else if (this.sizes.includes(size)){
+            console.log("Size already exists!");
+            return undefined;
+        }
+    }
+    this.deleteSize = (param) => {
+        const SizeToDelete = this.sizes.find(element => element === param);
+        const indexOfSizeToDelete = (this.sizes.indexOf(SizeToDelete));
+        this.sizes.splice(indexOfSizeToDelete, 1);
+        
+        
+        return this.sizes;
+    }
+    this.deleteReview = (param) => {
+           for(let i = 0; i <this.reviews.length; i++){
+            if(this.reviews[i].getReviewId() === param){
+            this.reviews.splice(i, 1);     
+            return this.reviews;
+            }       
+        }
+    }
+    this.getAverageRating = function(){
+        let tempRating = 0;
+        for(let i = 0; i < this.reviews.length; i++){
+            for(let key in this.reviews[i].rating){
+                tempRating += this.reviews[i].rating[key];
+            } 
+        }
+        tempRating /= 4;
+        tempRating /= (this.reviews.length);
+        let shortenedTempRating = tempRating.toFixed(1);
+        return shortenedTempRating;
+    }
 }
-const rating = {
-    ['service'] : 4,
-    ['price'] : 5,
-    ['value'] : 4,
-    ['quality'] : 4,
-};
+const rating = [];
+rating['service'] = 4;
+rating['price'] = 5;
+rating['value'] = 4;
+rating['quality'] = 4;
+const rating1 = [];
+rating1['service'] = 5;
+rating1['price'] = 3;
+rating1['value'] = 3;
+rating1['quality'] = 2;
+const rating2 = [];
+rating2['service'] = 1;
+rating2['price'] = 4;
+rating2['value'] = 3;
+rating2['quality'] = 2;
 
 
 
+let products = [];
 let date = new Date(2011, 12 ,5);
-    let sizes =['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, "-" ); 
-let review1 = newproduct.addReview(91502, "Samael",date, "shiny thing", "4.7 Stars");
-let review2 = newproduct.addReview(91912, "Michael", date, "good", "4.8 Stars");
-let review3 = newproduct.addReview(89125, "Aminadiel", date, "working great!", "4.9 Stars");
-console.log(newproduct.reviews);
+let sizes =['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+let images = ["Shop", "Cafe", "Restaraunt"];
+let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images); 
+let review1 = newproduct.addReview(91502, "Samael",date, "shiny thing", rating);
+let review2 = newproduct.addReview(91912, "Michael", date, "good", rating1);
+let review3 = newproduct.addReview(89125, "Aminadiel", date, "working great!", rating2);
+
+// console.log(newproduct.getAverageRating());
+console.log(newproduct);
+// console.log(newproduct.getAverageRating(newproduct));
+// console.log(newproduct.deleteSize("M"));
+// console.log(newproduct.deleteReview(91502));
+// console.log(newproduct.images);
+// let cafeImage = newproduct.getImage("Shop");
+// console.log(cafeImage);
+// let nonExistedBeforeSize = newproduct.addSize("XXXL");
+// console.log(nonExistedBeforeSize);
+// let Review1Rating = newproduct.reviews[0].rating;
+// console.log(Review1Rating);
+// Review1Rating = "5";
+// console.log(Review1Rating);
+// console.log(newproduct.getReviewByID(89125));
+
+
