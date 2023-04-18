@@ -1,3 +1,4 @@
+let products = [];
 function Reviews (id, author, date, comment, rating) {
     this.id = id;
     this.author = author;
@@ -85,14 +86,7 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
             return undefined;
         }
     }
-    this.deleteSize = (param) => {
-        const SizeToDelete = this.sizes.find(element => element === param);
-        const indexOfSizeToDelete = (this.sizes.indexOf(SizeToDelete));
-        this.sizes.splice(indexOfSizeToDelete, 1);
-        
-        
-        return this.sizes;
-    }
+    this.deleteSize = (size_key) => this.sizes.splice(this.sizes.findIndex(e => e === size_key), 1);
     this.deleteReview = (param) => {
            for(let i = 0; i <this.reviews.length; i++){
             if(this.reviews[i].getReviewId() === param){
@@ -113,7 +107,17 @@ function Product (ID, name, description, price, brand, sizes, activeSize, quanti
         let shortenedTempRating = tempRating.toFixed(1);
         return shortenedTempRating;
     }
+    this.addThisProductToTheList = function(){
+        products.push(this);
+    }
+    this.addThisProductToTheList();
 }
+
+function searchProducts(arrayOfProducts, searchText){
+    return arrayOfProducts.find(arr => arr.name.includes(searchText));
+}
+
+
 const rating = [];
 rating['service'] = 4;
 rating['price'] = 5;
@@ -132,17 +136,22 @@ rating2['quality'] = 2;
 
 
 
-let products = [];
 let date = new Date(2011, 12 ,5);
 let sizes =['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 let images = ["Shop", "Cafe", "Restaraunt"];
-let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images); 
+let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
+let newproduct1 = new Product(1235123, "Phone", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
+let newproduct2 = new Product(1235123, "Laptop", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
+let newproduct3 = new Product(1235123, "Pen", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
+
 let review1 = newproduct.addReview(91502, "Samael",date, "shiny thing", rating);
 let review2 = newproduct.addReview(91912, "Michael", date, "good", rating1);
 let review3 = newproduct.addReview(89125, "Aminadiel", date, "working great!", rating2);
+console.log(searchProducts(products, "T"));
 
+
+// console.log(newproduct.getImage("Restaraunt"));
 // console.log(newproduct.getAverageRating());
-console.log(newproduct);
 // console.log(newproduct.getAverageRating(newproduct));
 // console.log(newproduct.deleteSize("M"));
 // console.log(newproduct.deleteReview(91502));
