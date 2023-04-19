@@ -117,7 +117,6 @@ function searchProducts(arrayOfProducts, searchText){
     return arrayOfProducts.find(arr => arr.name.includes(searchText));
 }
 
-
 const rating = [];
 rating['service'] = 4;
 rating['price'] = 5;
@@ -135,20 +134,55 @@ rating2['value'] = 3;
 rating2['quality'] = 2;
 
 
+function sortRule(arr, whaToSort){
+    switch(whaToSort){
+        case "name": 
+    return arr.sort(function (a,b){
+        if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        })
+    case "price": 
+    return arr.sort(function (a,b){
+        if (a.price > b.price) {
+            return 1;
+          }
+          if (a.price < b.price) {
+            return -1;
+          }
+          return 0;
+        })
+    case "id": 
+    return arr.sort(function (a,b){
+        if (a.id > b.id) {
+            return 1;
+          }
+          if (a.id < b.id) {
+            return -1;
+          }
+          return 0;
+          
+        })
+    }
+}
 
 let date = new Date(2011, 12 ,5);
 let sizes =['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 let images = ["Shop", "Cafe", "Restaraunt"];
-let newproduct = new Product(1235123, "T-Shirt", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
-let newproduct1 = new Product(1235123, "Phone", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
-let newproduct2 = new Product(1235123, "Laptop", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
-let newproduct3 = new Product(1235123, "Pen", "black, with white stripes on sides, for men/women", "12$", "Nike", sizes, sizes[2], 3, date, images);
+let newproduct = new Product(1, "T-Shirt", "black, with white stripes on sides, for men/women", 12, "Nike", sizes, sizes[2], 3, date, images);
+let newproduct1 = new Product(2, "Phone", "black, with white stripes on sides, for men/women", 31, "Nike", sizes, sizes[2], 3, date, images);
+let newproduct2 = new Product(3, "Laptop", "black, with white stripes on sides, for men/women", 117, "Nike", sizes, sizes[2], 3, date, images);
+let newproduct3 = new Product(4, "Pen", "black, with white stripes on sides, for men/women", 5, "Nike", sizes, sizes[2], 3, date, images);
 
 let review1 = newproduct.addReview(91502, "Samael",date, "shiny thing", rating);
 let review2 = newproduct.addReview(91912, "Michael", date, "good", rating1);
 let review3 = newproduct.addReview(89125, "Aminadiel", date, "working great!", rating2);
-console.log(searchProducts(products, "T"));
 
+console.log(sortRule(products, "name"));
 
 // console.log(newproduct.getImage("Restaraunt"));
 // console.log(newproduct.getAverageRating());
