@@ -1,1 +1,14 @@
-
+let Validator = {
+    validateEmail : function(text){
+       return text.match(/^[^\-\.\+](\w|\d|\-|\.|\+){1,19}@[a-z0-9\.\!\$\%\&\’\*\+\/\=\?\^\_\-]{1,15}\.[a-z]{1,5}$/gmi) ? true : false;
+    },
+    validatePhone : function(phoneNumber){
+        return phoneNumber.match()
+    },
+    validatePassword : function(password){
+        return password.match(/\b\w*\d*(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\b.{8,}/gm) ? true : false;
+    }
+}
+var human = Validator;
+console.log(human.validateEmail("fi@secondpart.end"));
+console.log(human.validatePassword("Cl_Pass"));
