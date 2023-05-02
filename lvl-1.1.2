@@ -3,12 +3,18 @@ let Validator = {
        return text.match(/^[^\-\.\+](\w|\d|\-|\.|\+){1,19}@[a-z0-9\.\!\$\%\&\’\*\+\/\=\?\^\_\-]{1,15}\.[a-z]{1,5}$/gmi) ? true : false;
     },
     validatePhone : function(phoneNumber){
-        return phoneNumber.match()
+        if(phoneNumber.length > 25) {
+            return false;
+        }else{
+           return phoneNumber.match(/^[\s\-]*(\+(\s|\-)*?\d(\s|\-)*\d)?(\s|\-\d)*\(?(\s|\-)*?\d(\s|\-)*?\d(\s|\-)*?\d\)?(\s|\-)*(\d(\s|\-)*){7}$/gm) ? true : false;
+        }
     },
     validatePassword : function(password){
-        return password.match(/\b\w*\d*(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\b.{8,}/gm) ? true : false;
+        return password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\_]{8,}$/gm) ? true : false;
     }
 }
-var human = Validator;
+var human = Validator; 
 console.log(human.validateEmail("fi@secondpart.end"));
-console.log(human.validatePassword("Cl_Pass"));
+console.log(human.validatePassword(`C00l_Pass`));
+console.log(human.validatePhone("+38 099 5 6 7 8 9  01"));
+console.log(human.validatePhone("+48 (0989) 567 8901"));
